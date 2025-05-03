@@ -8,6 +8,7 @@ class Base {
   box_filter bxf1;
   gaussian gf1;
   scale_down scd1;
+  laplace lp1;
   String img_name;
   
   int[] current;
@@ -35,6 +36,7 @@ class Base {
     bxf1 = new box_filter(img.width,img.height);
     gf1 = new gaussian(img.width,img.height);
     scd1 = new scale_down();
+    lp1 = new laplace(img.width,img.height);
     //===============================================================================================================
     img.loadPixels();
     for(int i=0;i<img.height;i++){
@@ -47,7 +49,7 @@ class Base {
     //===============================================================================================================
     }
   
-  public void calculation(int bright,float contrast,boolean auto,boolean original,boolean save_to_buffer,boolean box,boolean gaussian){
+  public void calculation(int bright,float contrast,boolean auto,boolean original,boolean save_to_buffer,boolean box,boolean gaussian,boolean laplace){
       img = loadImage(img_name);
       this.bright=bright;
       this.contrast=contrast;
@@ -90,6 +92,10 @@ class Base {
   //===============================================================================================================
         if(gaussian){
            gf1.calculation(current);
+        }
+  //===============================================================================================================
+        if(laplace){
+           lp1.calculation(current);
         }
   //===============================================================================================================
         if(save_to_buffer){
